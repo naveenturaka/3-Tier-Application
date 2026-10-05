@@ -1,29 +1,116 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Jenkins CI/CD Demo</title>
-</head>
-<body>
-    <h1>Jenkins CI/CD Demo</h1>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <p>Frontend is working!</p>
+    <title>3-Tier Application</title>
 
-    <button onclick="checkBackend()">Check Backend</button>
-
-    <p id="result"></p>
-
-    <script>
-        async function checkBackend() {
-            try {
-                const response = await fetch("http://3.107.223.170:3000/api/message");
-                const data = await response.json();
-
-                document.getElementById("result").innerText = data.message;
-            } catch (error) {
-                document.getElementById("result").innerText =
-                    "Backend is not running";
-            }
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f2f2f2;
+            text-align: center;
+            padding: 50px;
         }
-    </script>
+
+        .container {
+            background: white;
+            max-width: 600px;
+            margin: auto;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px #aaa;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin: 10px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+        }
+
+        #result {
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>3-Tier Application</h1>
+
+    <p>Frontend: HTML / CSS / JavaScript</p>
+
+    <button onclick="checkBackend()">
+        Check Backend
+    </button>
+
+    <button onclick="getUsers()">
+        Get Users
+    </button>
+
+    <div id="result">
+        Result will appear here
+    </div>
+
+</div>
+
+<script>
+
+    // Change this to your EC2 Public IPv4
+    const BACKEND_URL = "http://3.107.223.170:3000";
+
+    async function checkBackend() {
+
+        try {
+
+            const response =
+                await fetch(BACKEND_URL + "/api/message");
+
+            const data = await response.json();
+
+            document.getElementById("result").innerHTML =
+                "<b>" + data.message + "</b>";
+
+        } catch (error) {
+
+            document.getElementById("result").innerHTML =
+                "Backend connection failed";
+
+            console.error(error);
+        }
+    }
+
+
+    async function getUsers() {
+
+        try {
+
+            const response =
+                await fetch(BACKEND_URL + "/api/users");
+
+            const data = await response.json();
+
+            document.getElementById("result").innerHTML =
+                "<pre>" +
+                JSON.stringify(data, null, 2) +
+                "</pre>";
+
+        } catch (error) {
+
+            document.getElementById("result").innerHTML =
+                "Unable to get users";
+
+            console.error(error);
+        }
+    }
+
+</script>
+
 </body>
 </html>
