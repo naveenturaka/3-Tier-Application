@@ -1,13 +1,15 @@
 {
-  "name": "jenkins-demo-backend",
+  "name": "three-tier-backend",
   "version": "1.0.0",
-  "description": "Simple backend for Jenkins CI/CD",
+  "description": "3 Tier Application Backend",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
-    "test": "node --check server.js"
+    "test": "node test.js"
   },
   "dependencies": {
-    "express": "^5.1.0"
+    "cors": "^2.8.5",
+    "express": "^5.1.0",
+    "mysql2": "^3.14.4"
   }
 }
